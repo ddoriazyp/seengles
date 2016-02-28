@@ -22,71 +22,71 @@ angular.module('starter', ['ionic'])
     }
   });
 
-  $window.fbAsyncInit = function() {
-    // Executed when the SDK is loaded
+  // $window.fbAsyncInit = function() {
+  //   // Executed when the SDK is loaded
 
-    FB.init({ 
+  //   FB.init({ 
 
-      /* 
-       The app id of the web app;
-       To register a new app visit Facebook App Dashboard
-       ( https://developers.facebook.com/apps/ ) 
-      */
+  //     /* 
+  //      The app id of the web app;
+  //      To register a new app visit Facebook App Dashboard
+  //      ( https://developers.facebook.com/apps/ ) 
+  //     */
 
-      appId: '193770967654652', 
+  //     appId: '193770967654652', 
 
-      /* 
-       Adding a Channel File improves the performance 
-       of the javascript SDK, by addressing issues 
-       with cross-domain communication in certain browsers. 
-      */
+  //     /* 
+  //      Adding a Channel File improves the performance 
+  //      of the javascript SDK, by addressing issues 
+  //      with cross-domain communication in certain browsers. 
+  //     */
 
-      channelUrl: 'app/channel.html', 
+  //     channelUrl: 'app/channel.html', 
 
-      /* 
-       Set if you want to check the authentication status
-       at the start up of the app 
-      */
+  //     /* 
+  //      Set if you want to check the authentication status
+  //      at the start up of the app 
+  //     */
 
-      status: true, 
+  //     status: true, 
 
-      /* 
-       Enable cookies to allow the server to access 
-       the session 
-      */
+       
+  //      Enable cookies to allow the server to access 
+  //      the session 
+      
 
-      cookie: true, 
+  //     cookie: true, 
 
-      /* Parse XFBML */
+  //     /* Parse XFBML */
 
-      xfbml: true 
-    });
+  //     xfbml: true
+  //   });
 
-    sAuth.watchAuthenticationStatusChange();
+  //   sAuth.watchAuthenticationStatusChange();
 
-  };
+  // };
 
-  // Are you familiar to IIFE ( http://bit.ly/iifewdb ) ?
+  // // Are you familiar to IIFE ( http://bit.ly/iifewdb ) ?
 
-  (function(d){
-    // load the Facebook javascript SDK
+  // (function(d){
+  //   // load the Facebook javascript SDK
 
-    var js, 
-    id = 'facebook-jssdk', 
-    ref = d.getElementsByTagName('script')[0];
+  //   var js, 
+  //   id = 'facebook-jssdk', 
+  //   ref = d.getElementsByTagName('script')[0];
 
-    if (d.getElementById(id)) {
-      return;
-    }
+  //   if (d.getElementById(id)) {
+  //     return;
+  //   }
 
-    js = d.createElement('script'); 
-    js.id = id; 
-    js.async = true;
-    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&version=v2.5";
+  //   js = d.createElement('script'); 
+  //   js.id = id; 
+  //   js.async = true;
+  //   js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&version=v2.5";
 
-    ref.parentNode.insertBefore(js, ref);
+  //   ref.parentNode.insertBefore(js, ref);
 
-  }(document));
+  // }(document));
 })
 
 .config(['$stateProvider', '$urlRouterProvider', '$ionicConfigProvider', function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
@@ -150,7 +150,8 @@ angular.module('starter', ['ionic'])
 
     $urlRouterProvider.otherwise('/menu/home');
 }])
-.controller('HomeController', function($scope, $ionicLoading, $ionicSideMenuDelegate, facebookService) {
+// .controller('HomeController', function($scope, $ionicLoading, $ionicSideMenuDelegate, facebookService) {
+.controller('HomeController', function($scope, $ionicLoading, $ionicSideMenuDelegate) {  
   $scope.toggleLeft = function() {
     $ionicSideMenuDelegate.toggleLeft();
   };
@@ -161,7 +162,7 @@ angular.module('starter', ['ionic'])
 
     var mapOptions = {
       center: myLatlng,
-      zoom: 16,
+      zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
@@ -173,25 +174,60 @@ angular.module('starter', ['ionic'])
       var currentLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
       map.setCenter(currentLocation);
 
-      // Create a draggable circle centered on the map
-      // var radiusInKm = 0.5;
-      // var circle = new google.maps.Circle({
-      //   strokeColor: "#6D3099",
-      //   strokeOpacity: 0.7,
-      //   strokeWeight: 1,
-      //   fillColor: "#B650FF",
-      //   fillOpacity: 0.35,
-      //   map: map,
-      //   center: currentLocation,
-      //   radius: ((radiusInKm) * 1000),
-      //   draggable: true
-      // });
-
       var myLocation = new google.maps.Marker({
         position: currentLocation,
         map: map,
-        title: 'My Location'
+        title: 'My Location',
+        draggable: true,
+        icon: 'https://scontent.xx.fbcdn.net/hprofile-xtl1/v/t1.0-1/p50x50/12799256_142755609446900_7276824139861263804_n.jpg?oh=813a93cd1f463b71fbb5977dc9f65a49&oe=575B1B5E'
       });
+
+      var cX = currentLocation.lat(),
+          cY = currentLocation.lng();
+
+      var user1 = new google.maps.Marker({
+        position: { lat: 37.804065698932575, lng: -122.41985571904905 },
+        map: map,
+        draggable: true,
+        title: 'User1',
+        icon: '/img/alicia.jpg'
+      });
+      google.maps.event.addListener(user1, "mouseover", function(mark) {
+          $('#user1Modal').show();
+      });
+      google.maps.event.addListener(user1, "mouseout", function(mark) {
+          $('#user1Modal').hide();
+      });
+
+      var user2 = new google.maps.Marker({
+        position: { lat: cX - 0.009, lng: cY + 0.001 },
+        map: map,
+        draggable: true,
+        title: 'User2',
+        icon: '/img/brenda.jpg'
+      });
+      google.maps.event.addListener(user2, "mouseover", function(mark) {
+          $('#user2Modal').show();
+      });
+      google.maps.event.addListener(user2, "mouseout", function(mark) {
+          $('#user2Modal').hide();
+      });
+
+      var user3 = new google.maps.Marker({
+        position: { lat: cX - 0.007, lng: cY - 0.009 },
+        map: map,
+        draggable: true,
+        title: 'User3',
+        icon: '/img/jennifer.jpg'
+      });
+      google.maps.event.addListener(user3, "mouseover", function(mark) {
+          $('#user3Modal').show();
+      });
+      google.maps.event.addListener(user3, "mouseout", function(mark) {
+          $('#user3Modal').hide();
+      });
+
+
     });
 
     $scope.map = map;
@@ -203,13 +239,12 @@ angular.module('starter', ['ionic'])
     //      }
     //    );
     // };
-    $scope.last_name='temp';
-    facebookService.getMyLastName() 
-       .then(function(response) {
-         $scope.last_name = response.last_name;
-         // console.log(response)
-       }
-     );
+    // $scope.last_name='temp';
+    // facebookService.getMyLastName() 
+    //    .then(function(response) {
+    //      $scope.last_name = response.last_name;
+    //    }
+    //  );
 
   });    
 })
@@ -219,23 +254,20 @@ angular.module('starter', ['ionic'])
     $ionicSideMenuDelegate.toggleLeft();
   };
 })
-.controller('BouncerController', function($scope, $ionicLoading, $ionicSideMenuDelegate) {
-  
-})
-.factory('facebookService', function($q) {
-    return {
-        getMyLastName: function() {
-            var deferred = $q.defer();
-            FB.api('/me', {
-                fields: 'last_name'
-            }, function(response) {
-                if (!response || response.error) {
-                    deferred.reject('Error occured');
-                } else {
-                    deferred.resolve(response);
-                }
-            });
-            return deferred.promise;
-        }
-    }
-});
+// .factory('facebookService', function($q) {
+//     return {
+//         getMyLastName: function() {
+//             var deferred = $q.defer();
+//             FB.api('/me', {
+//                 fields: 'last_name'
+//             }, function(response) {
+//                 if (!response || response.error) {
+//                     deferred.reject('Error occured');
+//                 } else {
+//                     deferred.resolve(response);
+//                 }
+//             });
+//             return deferred.promise;
+//         }
+//     }
+// });

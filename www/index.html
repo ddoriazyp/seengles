@@ -47,6 +47,7 @@
   <body ng-app="starter">
     <div id="fb-root"></div>
     <script>
+    
       // This is called with the results from from FB.getLoginStatus().
       function statusChangeCallback(response) {
         console.log('statusChangeCallback');
@@ -104,9 +105,17 @@
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function(response) {
           console.log('Successful login for: ' + response.name);
-          document.getElementById('status').innerHTML =
-            'Thanks for logging in, ' + response.name + '!';
+          console.log(response, response.first_name)
+          $('#name').html(response.name);
+
+          // console.log(response.id)
+          FB.api('/' + response.id + '/picture', function(response) {
+            // console.log(response.data.url)
+            $('#pic').attr('src', response.data.url)
+          });
         });
+
+
       }
     </script>
 
