@@ -1,0 +1,19 @@
+<ion-view title="Clubber B" hide-back-button="true">
+
+    <ion-nav-buttons side="left">
+      <button menu-toggle="left" class="button button-icon icon ion-navicon"></button>
+    </ion-nav-buttons>
+
+    <ion-content has-header="true" padding="true">
+	<h3>Clubber B</h3>
+	</ion-content>
+
+    <div class="tabs tabs-icon-only">
+      <a nav-clear class="tab-item disable-user-behavior" title="Home" nav-clear ui-sref="menu.clubber-b">
+        <i class="icon ion-ios-basketball-outline"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+      </a>
+      <a nav-clear class="tab-item disable-user-behavior active" title="Chat" icon-on="ion-ios7-filing" icon-off="ion-ios7-filing-outline" ui-sref="menu.clubber-c">
+        <i class="icon ion-wineglass"></i><span class="tab-title ng-binding" ng-bind-html="title"></span>
+      </a>
+    </div>
+</ion-view>
