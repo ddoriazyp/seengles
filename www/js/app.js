@@ -179,7 +179,7 @@ angular.module('starter', ['ionic'])
         map: map,
         title: 'My Location',
         draggable: true,
-        icon: 'https://scontent.xx.fbcdn.net/hprofile-xtl1/v/t1.0-1/p50x50/12799256_142755609446900_7276824139861263804_n.jpg?oh=813a93cd1f463b71fbb5977dc9f65a49&oe=575B1B5E'
+        icon: 'img/kurt.png'
       });
 
       var cX = currentLocation.lat(),
@@ -190,7 +190,7 @@ angular.module('starter', ['ionic'])
         map: map,
         draggable: true,
         title: 'User1',
-        icon: '/img/alicia.jpg'
+        icon: '/img/alicia.png'
       });
       google.maps.event.addListener(user1, "mouseover", function(mark) {
           $('#user1Modal').show();
@@ -204,7 +204,7 @@ angular.module('starter', ['ionic'])
         map: map,
         draggable: true,
         title: 'User2',
-        icon: '/img/brenda.jpg'
+        icon: '/img/brenda.png'
       });
       google.maps.event.addListener(user2, "mouseover", function(mark) {
           $('#user2Modal').show();
@@ -218,7 +218,7 @@ angular.module('starter', ['ionic'])
         map: map,
         draggable: true,
         title: 'User3',
-        icon: '/img/jennifer.jpg'
+        icon: '/img/jennifer.png'
       });
       google.maps.event.addListener(user3, "mouseover", function(mark) {
           $('#user3Modal').show();
