@@ -193,10 +193,10 @@ angular.module('starter', ['ionic'])
         icon: '/img/alicia.png'
       });
       google.maps.event.addListener(user1, "mouseover", function(mark) {
-          $('#user1Modal').show();
+          infowindow1.open(map, this);
       });
       google.maps.event.addListener(user1, "mouseout", function(mark) {
-          $('#user1Modal').hide();
+          infowindow1.close();
       });
 
       var user2 = new google.maps.Marker({
@@ -207,10 +207,10 @@ angular.module('starter', ['ionic'])
         icon: '/img/brenda.png'
       });
       google.maps.event.addListener(user2, "mouseover", function(mark) {
-          $('#user2Modal').show();
+          infowindow2.open(map, this);
       });
       google.maps.event.addListener(user2, "mouseout", function(mark) {
-          $('#user2Modal').hide();
+          infowindow2.close();
       });
 
       var user3 = new google.maps.Marker({
@@ -221,13 +221,64 @@ angular.module('starter', ['ionic'])
         icon: '/img/jennifer.png'
       });
       google.maps.event.addListener(user3, "mouseover", function(mark) {
-          $('#user3Modal').show();
+          infowindow3.open(map, this);
       });
       google.maps.event.addListener(user3, "mouseout", function(mark) {
-          $('#user3Modal').hide();
+          infowindow3.close();
       });
 
+      var infowindow1 =  new google.maps.InfoWindow({
+        content: '<div style="text-align:center;z-index:100"><b>Paola Perez</b><br /><i>Investment Banking</i><br/><p>Interests: Water skiing, books<br><p>Will be at my favorite chocolate shop  @8pm</p><div class="message"><a href="javascript:void(0)">message</a></div></div>',
+        map: map
+      });
+      var infowindow2 =  new google.maps.InfoWindow({
+        content: '<div style="text-align:center"><b>Amanda Vegas</b><br /><i>Nurse</i><br/><p>Interests: Hiking, working out<br><p>Hey, going for a coffee @2pm</p><div class="message"><a href="javascript:void(0)">message</a></div></div>',
+        map: map,
+        disableAutoPan: true
+      });
+      var infowindow3 =  new google.maps.InfoWindow({
+        content: '<div style="text-align:center"><b>Jessica Nubi</b><br /><i>Startup Founder</i><br><p>Interests: Volunteering, Money</p><br><p>Hi, Available to meet @5pm</p><div class="message"><a href="javascript:void(0)">message</a></div></div>',
+        map: map,
+        disableAutoPan: true
+      });
 
+      infowindow1.close();
+      infowindow2.close();
+      infowindow3.close();
+
+      var input = document.getElementById('pac-input');
+      var autocomplete = new google.maps.places.Autocomplete(input);
+      autocomplete.bindTo('bounds', map);
+
+      autocomplete.addListener('place_changed', function() {
+          // infowindow.close();
+          myLocation.setVisible(false);
+          var place = autocomplete.getPlace();
+          if (!place.geometry) {
+            window.alert("Autocomplete's returned place contains no geometry");
+            return;
+          }
+
+          // If the place has a geometry, then present it on a map.
+          if (place.geometry.viewport) {
+            map.fitBounds(place.geometry.viewport);
+          } else {
+            map.setCenter(place.geometry.location);
+            map.setZoom(17);  // Why 17? Because it looks good.
+          }
+
+          myLocation.setPosition(place.geometry.location);
+          myLocation.setVisible(true);
+
+          var address = '';
+          if (place.address_components) {
+            address = [
+              (place.address_components[0] && place.address_components[0].short_name || ''),
+              (place.address_components[1] && place.address_components[1].short_name || ''),
+              (place.address_components[2] && place.address_components[2].short_name || '')
+            ].join(' ');
+          }
+        });
     });
 
     $scope.map = map;
